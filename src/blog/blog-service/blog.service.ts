@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Post } from '../interfaces/post.interface';
-import { CreatePostDTO } from '../dto/create-post.dto';
+import { CreatePostDTO } from '../blog-dto/create-post.dto';
 
 @Injectable()
 export class BlogService {
     //constructor 
     constructor(@InjectModel('Post') private readonly postModel: Model<Post>) { }
     async addPost(createPostDTO: CreatePostDTO): Promise<Post> {
-        const newPost = await this.postModel(createPostDTO);
+        const newPost = await new this.postModel(createPostDTO);
         return newPost.save();
     }
 
